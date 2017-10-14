@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Speed Scrubber</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <video class="flex" width="765" height="430" src="City Of Stars-Tab (Guitar Tutorial)-Kangho Lee (1).mp4" loop controls></video>
+    <div class="speed">
+      <div class="speed-bar">1×</div>
+    </div>
+  </div>
+
+<script>
+
+const video = document.querySelector('.flex');
+const speed = document.querySelector('.speed');
+const bar = document.querySelector('.speed-bar');
+
+function handleMove(e) {
+	const max = 5;
+	const min = 0.5;
+	const verticalBar = e.pageY - this.offsetTop;
+	const percent = verticalBar / this.offsetHeight;
+	const height = Math.round(percent * 100) + '%';
+	const playbackRate = percent * (max-min) + min;
+	bar.style.height = height;
+	bar.textContent = playbackRate.toFixed(2) + 'x';
+	video.playbackRate = playbackRate
+	console.log(playbackRate);
+}
+
+
+speed.addEventListener('mousemove', handleMove);
+
+
+/*const video = document.querySelector('.flex');
+const speed = document.querySelector('.speed');
+const bar = document.querySelector('.speed-bar')
+
+function handleMove(e) {
+	const y = e.pageY - this.offsetTop;
+	const percent = y / this.offsetHeight;
+	const height = Math.round(percent * 100) + '%';
+	const min = 0.4;
+	const max = 4;
+	const playbackRate = percent * (max-min) + min;
+	bar.style.height = height;
+	bar.textContent = playbackRate.toFixed(2) + 'x';
+	video.playbackRate = playbackRate;
+	console.log(height);
+}
+
+
+
+speed.addEventListener('mousemove', handleMove);*/
+
+
+/*const bar = document.querySelector('.speed-bar');
+const speed = document.querySelector('.speed');
+const video = document.querySelector('.flex');
+
+function handleMove(e) {
+	const y = e.pageY - this.offsetTop;
+	const percent = y / this.offsetHeight;
+	const max = 4;
+	const min = 0.4;
+	const height = Math.round(percent * 100) + '%';
+	const playbackRate = percent * (max-min) + min;
+	bar.style.height = height;
+	bar.textContent = playbackRate.toFixed(2) + 'x';
+	video.playbackRate = playbackRate;
+	console.log(playbackRate);
+}
+
+
+speed.addEventListener('mousemove', handleMove);*/
+
+/*  const speed = document.querySelector('.speed');
+  const bar = speed.querySelector('.speed-bar');
+  const video = document.querySelector('.flex');
+
+  function handleMove(e) {
+      const y = e.pageY - this.offsetTop;
+      const percent = y / this.offsetHeight;
+      const min = 0.4;
+      const max = 4;
+      const height = Math.round(percent * 100) + '%';
+      const playbackRate = percent * (max - min) + min;
+      bar.style.height = height;
+      bar.textContent = playbackRate.toFixed(2) + '×';
+      video.playbackRate = playbackRate;
+    }
+
+  speed.addEventListener('mousemove', handleMove);
+*/
+
+/*	const speed = document.querySelector('.speed');
+	const bar = document.querySelector('.speed-bar');
+	const video = document.querySelector('.flex');
+
+	speed.addEventListener('mousemove', function(e) {
+		const y = e.pageY - this.offsetTop;
+		const percent = y / this.offsetHeight;
+		const min = 0.4;
+		const max = 4;
+		const height = Math.round(percent * 100) + '%';
+		const playbackRate = percent * (max-min) + min;
+		bar.style.height = height;
+		bar.textContent = playbackRate.toFixed(2) + 'x';
+		video.playbackRate = playbackRate;
+
+		console.log(percent);
+	});*/
+
+
+</script>
+</body>
+</html>
