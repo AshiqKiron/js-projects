@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Whack A Mole!</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+
+<style type="text/css">
+	  .modal {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: all 0.25s ease-in-out;
+        visibility: hidden;
+    }
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        margin: auto;
+        padding: 1rem 1.5rem;
+        width: 24rem;
+        border-radius: 0.5rem;
+    }
+    .close-button {
+        float: right;
+        width: 1.5rem;
+        line-height: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        border-radius: .25rem;
+        background-color: lightgray;
+    }
+    .close-button:hover {
+        background-color: darkgray;
+    }
+    .show-modal {
+        opacity: 1;
+        visibility: visible;
+        transform: scaleX(1.0) scaleY(1.0);
+    }
+    .hide-modal {
+        visibility: visible;
+        opacity: 0;
+        transform: scaleX(1.1) scaleY(1.1);
+    }
+    .hide-modal2 {
+        visibility: hidden;
+    }
+</style>
+<body>
+
+  <button class="trigger">Click here to trigger the modal!</button>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h1>Hello, I am a modal!</h1>
+        </div>
+    </div>
+
+<script>
+   var modal = document.querySelector(".modal");
+    var trigger = document.querySelector(".trigger");
+    var closeButton = document.querySelector(".close-button");
+
+    function showModal() {
+        modal.classList.remove("hide-modal", "hide-modal2");
+        modal.classList.add("show-modal");
+    }
+
+    function hideModal() {
+        modal.classList.remove("show-modal");
+        modal.classList.add("hide-modal");
+        setTimeout(function() {
+            modal.classList.add("hide-modal2");
+        }, 250);
+    }
+
+    function windowOnClick(event) {
+        if (event.target == modal) {
+            hideModal();
+        }
+    }
+
+    trigger.addEventListener("click", showModal);
+    closeButton.addEventListener("click", hideModal);
+    window.addEventListener("click", windowOnClick);
+
+</script>
+</body>
+</html>
