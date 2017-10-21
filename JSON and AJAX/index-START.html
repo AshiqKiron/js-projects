@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON AND AJAX</title>
+</head>
+<body>
+
+
+
+  <div class="site-wrap">
+  </div>
+
+  
+<script>
+
+  //make string JSON
+  var dog = {
+    "name"  : "Sophie",
+    "age"   : 3,
+    "weight": 20
+  }
+
+  var dogJSON = JSON.stringify(dog);
+  console.log(dogJSON);
+
+  //get objects from JSON
+  const json = '{"name":"shopie", "age":3, "weight":2}';
+  var cat = JSON.parse(json);
+  console.log(cat);
+
+
+  // base url
+  var base = 'https://jsonplaceholder.typicode.com';
+
+    // use fetch on the /posts route, then pass the response along
+    fetch(base + "/posts").then(function(response) {
+        // with the response, convert it to JSON, then pass it along
+        response.json().then(function(json) {
+            // print that JSON
+            console.log(json);
+        });
+    });
+ 
+</script>
+
+</body>
+</html>
