@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timeout Interval</title>
+</head>
+<body>
+
+  <header>
+    <h1>Testing the timeout interval</h1>
+  </header>
+
+
+  <div class="site-wrap">
+
+  
+<script>
+
+  function sayHello() {
+        console.log("Hello!");
+    }
+    //prints to console after 5 seconds
+    const timeout = setTimeout(sayHello, 5 * 1000);
+    //clears the output as if it never existed
+    clearTimeout(timeout);
+
+
+    var seconds = 0;
+    function printTime() {
+        seconds++;
+        console.log("Seconds elapsed: " + seconds);
+
+        if (seconds == 10) {
+          console.log("10 sec has passed");
+          clearInterval(interval);
+        }
+    }
+
+    var interval = setInterval(printTime, 1000);
+</script>
+
+</body>
+</html>
