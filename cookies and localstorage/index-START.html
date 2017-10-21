@@ -1,48 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JSON AND AJAX</title>
-</head>
-<body>
+ <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Creating a Cookie</title>
+        </head>
+        <body>
+            <script>
+              //Creating a cookie is as easy as setting the value of document.cookie to a string. Because the string cannot contain any spaces, commas or semicolons, we use the escape() function which removes all of that for us.
+                  function createCookie(key, value) {
+                     var cookie = escape(key) + "=" + escape(value) + ";";
+                     document.cookie = cookie;
+                     console.log(cookie);
+                     console.log("Creating new cookie with key: " + key + " value: " + value);
+                  }
+                  createCookie("sport", "basketball");
+                  createCookie("icecream", "vanilla");
 
+                  //Setting the expiration date on cookies is as simple as giving the cookie a key/value pair where the key is expires and the value is when you want that cookie to expire.
+                  function createCookie(key, value, date) {
+                   var expiration = new Date(date).toUTCString();
+                   var cookie = escape(key) + "=" + escape(value) + ";expires=" + expiration + ";";
+                   document.cookie = cookie;
+                   console.log(cookie);
+                   console.log("Creating new cookie with key: " + key + " value: " + value + " expiration: " + expiration);
+                }
+                createCookie("sport", "basketball", Date.UTC(2017, 8, 1));
+                createCookie("icecream", "vanilla", Date.UTC(2017, 8, 1));
 
-
-  <div class="site-wrap">
-  </div>
-
+                //Reading cookies takes a bit of work because of the format they are stored in. We'll have to use some string manipulation to read them properly.
+                function readCookie(name) {
+                  var key = name + "=";
+                  var cookie = document.cookie.split(';');
+                  for(var i = 0; i < cookie.length; i++) {
+                    var c = cookie[i];
+                    while (c.charAt(0) === ' ') {
+                            c = c.substring(1, c.length);
+                        }
+                    if (c.indexOf(key) === 0) {
+                            return c.substring(key.length, c.length);
+                        }
+                  }
+                  return null;
+                }
   
-<script>
 
-  //make string JSON
-  var dog = {
-    "name"  : "Sophie",
-    "age"   : 3,
-    "weight": 20
-  }
+                //Basically what this function is doing is using the split method to split up the entire cookie text into their individual key/value pairs. Then, it is checking each pair to see if it matches with the name provided. If it matches, it returns that value, if not, it returns null.
+                function createCookie(key, value, date) {
+                 var expiration = new Date(date).toUTCString();
+                 console.log(expiration);
+                 var cookie = escape(key) + "=" + escape(value) + ";expires=" + expiration + ";";
+                 document.cookie = cookie;
+                 console.log(cookie);
+                 console.log("New cookie with key: " + key + " value: " + value + " expiration: " + expiration);
+              }
 
-  var dogJSON = JSON.stringify(dog);
-  console.log(dogJSON);
+              function readCookie(name) {
+                  var key = name + "=";
+                  var cookie = document.cookie.split(';');
+                  for(var i = 0; i < cookie.length; i++) {
+                      var c = cookie[i];
+                      while (c.charAt(0) === ' ') {
+                          c = c.substring(1, c.length);
+                      }
+                      if (c.indexOf(key) === 0) {
+                          return c.substring(key.length, c.length);
+                      }
+                  }
+                  return null;
+              }
 
-  //get objects from JSON
-  const json = '{"name":"shopie", "age":3, "weight":2}';
-  var cat = JSON.parse(json);
-  console.log(cat);
+              createCookie("sport", "basketball", Date.UTC(2017, 8, 1));
+              createCookie("icecream", "vanilla", Date.UTC(2017, 8, 1));
 
+              console.log(readCookie("icecream"));
 
-  // base url
-  var base = 'https://jsonplaceholder.typicode.com';
+              //saving data to local storage
+              var game = {
+                  "name": "Rocket League",
+                  "release": 2015,
+                  "developer": "Psyonix"
+              }
+              var gameJSON = JSON.stringify(game);
+              localStorage.setItem("game", gameJSON);
 
-    // use fetch on the /posts route, then pass the response along
-    fetch(base + "/posts").then(function(response) {
-        // with the response, convert it to JSON, then pass it along
-        response.json().then(function(json) {
-            // print that JSON
-            console.log(json);
-        });
-    });
- 
-</script>
-
-</body>
-</html>
+              //Reading data from local storage is the same process as saving data, but in the reverse. Instead of setItem, you use getItem.
+              var gameJSON = localStorage.getItem("game");
+              var game = JSON.parse(gameJSON);
+              console.log(game);
+            </script>
+        </body>
+    </html>
