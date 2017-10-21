@@ -1,0 +1,96 @@
+ <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Creating a Cookie</title>
+
+        <style type="text/css">
+button { font-size: 20px; }
+
+.grid {
+  width: 125px;
+  background: #DDD;
+  height: 125px;
+  float: left;
+  margin-right: 20px;
+}
+
+.grid-item {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px 5px 0;
+  background: #09F;
+  float: left;
+  transition: transform 0.4s;
+}
+
+.grid-item.is-moved {
+  transform: translateX(145px);
+}
+
+        </style>
+        </head>
+      <p><button class="move-button">Move items</button></p>
+
+<div class="grid grid-a">
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+</div>
+
+<div class="grid"></div>
+
+        <body>
+            <script>
+            
+            var button = document.querySelector('.move-button');
+            var box = document.querySelectorAll('.grid-a .grid-item');
+
+            button.onclick = function moveFun() {
+              for (var i = 0; i < box.length; i++) {
+                box[i].classList.toggle('is-moved');
+              }
+            }
+
+            /*var moveButton = document.querySelector('.move-button');
+            var items = document.querySelectorAll('.grid-a .grid-item');
+
+            moveButton.onclick = function() {
+              for (var i = 0; i < items.length; i++) {
+                items[i].classList.toggle('is-moved');
+              }
+            };*/
+/*
+             var moveButton = document.querySelector('.move-button');
+              var items = document.querySelectorAll('.grid-a .grid-item');
+
+              moveButton.onclick = function() {
+                for ( var i=0; i < items.length; i++ ) {
+                  items[i].classList.toggle('is-moved');
+                }
+              };*/
+
+            </script>
+        </body>
+    </html>
