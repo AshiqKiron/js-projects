@@ -60,28 +60,133 @@ button { font-size: 20px; }
 </div>
 
 <div class="grid"></div>
-
+<!-- tutorial link : https://css-tricks.com/staggering-animations/ -->
         <body>
             <script>
-            
-            var button = document.querySelector('.move-button');
-            var box = document.querySelectorAll('.grid-a .grid-item');
 
-            button.onclick = function moveFun() {
-              for (var i = 0; i < box.length; i++) {
-                box[i].classList.toggle('is-moved');
-              }
+
+          //frame based ideal animation behavior
+          var moveButton = document.querySelector('.move-button');
+          var items = document.querySelectorAll('.grid-a .grid-item');
+
+          var isToggled = false;
+          var isMoving = false;
+          var toggleDirection = 1;
+          var lastMove =  new Date();
+          var moveIndex = items.length;
+
+          moveButton.onclick = function() {
+            isToggled = !isToggled;
+            toggleDirection *= -1;
+            moveIndex -= isMoving ? toggleDirection : 0;
+            isMoving = true;
+          };
+
+          function animate() {
+            moveItems();
+            requestAnimationFrame( animate );
+          }
+
+          animate();
+
+          // time in ms between staggered transition
+          var delay = 50;
+
+          function moveItems() {
+            if ( !isMoving ) {
+              return;
             }
+            var now = new Date();
+            if ( now - lastMove < delay ) {
+              return
+            }
+            lastMove = now;
+            moveIndex += toggleDirection;
+            var item = items[ moveIndex ];
+            if ( item ) {
+              item.classList.toggle('is-moved');
+            } else {
+              isMoving = false;
+            }
+          } 
 
+          //transition delay stop animation when user double click
+          /*var moveButton = document.querySelector('.move-button');
+          var items = document.querySelectorAll('.grid-a .grid-item');
+
+          // get vendor transition property
+          var docElemStyle = document.documentElement.style;
+          var transitionProp = typeof docElemStyle.transition == 'string' ?
+              'transition' : 'WebkitTransition';
+
+          moveButton.onclick = function() {
+            for ( var i=0; i < items.length; i++ ) {
+              var item = items[i];
+              // stagger transition with transitionDelay
+              item.style[ transitionProp + 'Delay' ] = ( i * 50 ) + 'ms';
+              item.classList.toggle('is-moved');
+            }
+          };*/
+
+
+
+
+          //delay in animation
+          /*var moveButton = document.querySelector('.move-button');
+          var items = document.querySelectorAll('.grid-a .grid-item');
+          var isMoved = false;
+
+          moveButton.onclick = function() {
+            // toggle flag
+            isMoved = !isMoved;
+
+            for ( var i=0; i < items.length; i++ ) {
+              // get function in closure, so i can iterate
+              var toggleItemMove = getToggleItemMove( i );
+              // reverse stagger order
+              var delay = isMoved ? ( items.length - i - 1 ) : i;
+              delay *= 50;
+              // stagger transition with setTimeout
+              setTimeout( toggleItemMove, delay );
+            }
+          };
+
+          function getToggleItemMove( i ) {
+            var item = items[i];
+            return function() {
+              item.classList.toggle('is-moved');
+            }
+          }*/
+
+
+
+
+            //introduce setTimeOut
             /*var moveButton = document.querySelector('.move-button');
             var items = document.querySelectorAll('.grid-a .grid-item');
+            var isMoved = false;
 
             moveButton.onclick = function() {
-              for (var i = 0; i < items.length; i++) {
-                items[i].classList.toggle('is-moved');
+              // toggle flag
+              isMoved = !isMoved;
+
+              for ( var i=0; i < items.length; i++ ) {
+                // get function in closure, so i can iterate
+                var toggleItemMove = getToggleItemMove( i );
+                // stagger transition with setTimeout
+                setTimeout( toggleItemMove, i * 50 );
               }
-            };*/
-/*
+            };
+
+            function getToggleItemMove( i ) {
+              var item = items[i];
+              return function() {
+                item.classList.toggle('is-moved');
+              }
+            }*/
+ 
+    
+            /*initiall moving JS
              var moveButton = document.querySelector('.move-button');
               var items = document.querySelectorAll('.grid-a .grid-item');
 
