@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Synthesis</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="voiceinator">
+
+      <h1>The Voiceinator 5000</h1>
+
+      <select name="voice" id="voices">
+        <option value="">Select A Voice</option>
+      </select>
+
+      <label for="rate">Rate:</label>
+      <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
+
+      <label for="pitch">Pitch:</label>
+
+      <input name="pitch" type="range" min="0" max="2" step="0.1">
+      <textarea name="text">Hello! I love JavaScript 👍</textarea>
+      <button id="stop">Stop!</button>
+      <button id="speak">Speak</button>
+
+    </div>
+
+<script>
+
+
+
+
+  const msg = new SpeechSynthesisUtterance();
+  let voices = [];
+  const voicesDropdown = document.querySelector('[name="voice"]');
+  const options = document.querySelectorAll('[type="range"], [name="text"]');
+  const speakButton = document.querySelector('#speak');
+  const stopButton = document.querySelector('#stop');
+
+  //add whatever value is in the name text field as default message
+  msg.text = document.querySelector('[name="text"]').value;
+
+  function populateVoices(e) {
+    voices = this.getVoices();
+    //insert dropdown options to voicesdropdown HTML
+    voicesDropdown.innerHTML = voices
+    //trim the list with only en includes in it
+    //.filter(voices => voice.lang.includes(en))
+    //get the voice options and join them in dropdown options
+      .map(voices => `<option value="${voices.name}">${voices.name} ${voices.lang}</options>`)
+      .join('');
+  }
+
+  function setVoice() {
+    //find the name property in all voice objects
+    msg.voice = voices.find(voice => voice.name === this.value);
+    toggle();
+  }
+
+  function toggle(startOver = true) {
+    //cancel the current 
+    speechSynthesis.cancel();
+    if(startOver) {
+    //reset the msg again
+    speechSynthesis.speak(msg);
+    }
+  }
+
+  //set the options
+  function setOption() {
+    console.log(this.name, this.value);
+    //set the message from what the message changed(this.name) to what value changed(this.value)
+    msg[this.name] = this.value;
+    toggle();
+  }
+
+  //grab global variable speechSynthesis
+  speechSynthesis.addEventListener('voiceschanged', populateVoices);
+  voicesDropdown.addEventListener('change', setVoice);
+  //itirate over the options
+  options.forEach(option => option.addEventListener('change', setOption));
+  //speak button on click working
+  speakButton.addEventListener('click', toggle);
+  //making the stop button work
+  stopButton.addEventListener('click', () => toggle(false));
+
+</script>
+
+</body>
+</html>
