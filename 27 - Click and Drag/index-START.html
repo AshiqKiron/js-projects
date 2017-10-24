@@ -43,8 +43,11 @@
 
     slider.addEventListener('mousedown', (e) => {
         isDown = true;
+        //add active class
         slider.classList.add('active');
+        //substract the margin around the div
         startX = e.pageX - slider.offsetLeft;
+        //where the initial scroll when we started
         scrollLeft = slider.scrollLeft;
         console.log(startX);
     });
@@ -59,8 +62,11 @@
     slider.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
+        //everytime recalculate the initial click with mousemove
         const x = e.pageX - slider.offsetLeft;
+        //determine how far we have deviated from the click
         const walk = (x - startX) * 3;
+        //change the div to scroll
         slider.scrollLeft = scrollLeft - walk;
     });
 
