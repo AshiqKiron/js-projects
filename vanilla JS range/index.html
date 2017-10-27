@@ -1,0 +1,37 @@
+<input type="range" name="quantity" min="0" max="100">
+<output for="quantity"></output>
+
+
+<style type="text/css">
+	body, html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<script type="text/javascript">
+	
+
+	const rangeInput = document.querySelector('input');
+	const output = document.querySelector('output');
+
+
+	function math() {
+		output.value = this.value;
+	}
+
+	function setDefaultState() {
+		output.value = rangeInput.value;
+	}
+
+	//input event does the live value change
+	rangeInput.addEventListener('input', math);
+
+	//set the default output value when DOM has loaded
+	document.addEventListener('DOMContentLoaded', setDefaultState);
+</script>

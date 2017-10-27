@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+	const canvas = document.querySelector('#draw');
+	//get the 2d context of html5 canvas
+	const ctx = canvas.getContext('2d');
+
+	//set canvas width and height to window width and height
+	canvas.width = window.innerWidth;
+	canvas.heightwidth = window.innerHeight;
+
+	// get the stroke color, end of the line (squared off or rounded around the corners)
+	ctx.strokeStyle = 'red';
+	ctx.lineJoin = 'round';
+	ctx.lineCap = 'round';
+	ctx.lineWidth = 5;
+	//ctx.globalCompositeOperation = 'multiply';
+
+	//create a false alarm flag (don't paint when it's a normal click)
+	let isDrawing = false;
+
+	//get last x & y value of the drawing
+	let lastX = 0;
+	let lastY = 0;
+	let hue = 0;
+	let direction = true;
+
+	function draw(e) {
+		if (!isDrawing) return; //stop the function from running when they are not mouse down
+		console.log(e);
+		//make the stroke style get hue
+		ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+		//start the path
+		ctx.beginPath();
+		//start from 
+		ctx.moveTo(lastX, lastY);
+		//go to
+		ctx.lineTo(e.offsetX, e.offsetY);
+		ctx.stroke();
+		//get the last position x & y coordinate
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+		hue++;
+
+		//reset the hue when greater than 360
+		if (hue > 360) {
+			hue = 0;
+		}
+
+		if (ctx.lineWidth >= 100 || ctx.lineWidth <=1) {
+			direction = !direction;
+		}
+
+		if (direction) {
+			ctx.lineWidth++;
+		} else {
+			ctx.lineWidth--;
+		}
+		
+	}
+
+	canvas.addEventListener('mousedown', (e) => {
+		isDrawing = true;
+		//recalculate and get the last position x & y coordinate in mouse down event before going into mouse move event
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+	});
+
+	canvas.addEventListener('mousemove', draw);
+	canvas.addEventListener('mouseup', () => isDrawing = false);
+	canvas.addEventListener('mouseout' ,() => isDrawing = false);
+
+
+
+
+</script>
+
+<style>
+  html, body {
+    margin:0;
+  }
+</style>
+
+</body>
+</html>
