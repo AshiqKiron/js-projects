@@ -1,0 +1,117 @@
+<h1>Vanilla JS Draggable</h1>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+
+<style type="text/css">
+	body {
+  text-align: center;
+}
+.box {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  z-index: 1;
+  top: 100px;
+  cursor: move;
+}
+.box:nth-of-type(1) {
+  left: 10%;
+  background: blue;
+}
+.box:nth-of-type(2) {
+  background: green;
+  width: 200px;
+  height: 200px;
+  left: 40%;
+}
+.box:nth-of-type(3) {
+  background: red;
+  width: 150px;
+  right: 10%;
+}
+
+</style>
+
+<script type="text/javascript">
+
+	
+
+
+	var selector = '.box';
+	var elements = document.querySelectorAll(selector);
+	//set initial z-index value
+	$z = 1;
+
+	// Bind functions to events
+	for(var i = 0; i < elements.length; i++){
+	  elements[i].addEventListener('mousedown', drag);
+	  elements[i].addEventListener('mouseup', end);
+	};
+
+	// Drag function
+	function drag(event) {
+	  // Set variable to true on mousedown
+	  $moving = true;
+	  // Increase z-index so last clicked always on top
+	  $z = $z+1;
+	  // Select the item that was clicked
+	  $this = event.target;
+	  // Positions cursor in center of element when being dragged, as oposed to the top left
+	  $width = $this.offsetWidth / 2;
+	  $height = $this.offsetHeight / 2;
+	  // Element follows mouse cursor
+	  document.addEventListener('mousemove',function(e) {
+	    // Only run if variable is true (this is destroyed on mouseup)
+	    if($moving === true){
+	      // Postion element, minus half width/height as above
+	      var x = e.clientX - $width;
+	      var y = e.clientY - $height;
+
+	      // Store left, top, and z-index in variable
+	      var position = 'left:' + x + 'px;top:' + y + 'px;z-index:'+$z+';cursor:move;';
+	      // Set style
+	      $this.setAttribute('style', position);
+	    };
+	  });
+	};
+
+	// Destroy drag on mouse up
+	function end() {
+	  $moving = false;
+	};
+
+
+	/*
+	const box = document.querySelectorAll('.box');
+	$z = 1;
+
+	for (var i = 0; i < box.length; i++) {
+		box[i].addEventListener('mousedown', click);
+		box[i].addEventListener('mouseup', release);
+	}
+
+	function click(events) {
+		$drag = true;
+		$z = $z+1;
+		$this = event.target;
+		$width = this.offsetWidth / 2;
+		$height = this.offsetHeight / 2;
+
+		document.addEventListener('mousemove', function (e) {
+			if ($drag === true) {
+				var x = e.clientX - $width;
+				var y = e.clientY - $height;
+
+			const position = 'left:' + x + 'px;top:' + y + 'px;z-index:' + $z + ';cursor-move;';
+			$this.setAttribute('style', position);
+			};
+		});
+
+	};
+
+	function release() {
+	  $drag = false;
+	};
+	*/
+</script>
