@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pricing calculator</title>
+</head>
+<style type="text/css">
+	body {padding: 10%; text-align: center;}
+	.result {font-size: 30px;padding: 5%;}
+	span {color: red;padding: 5px}
+</style>
+<body>
+
+	<h1>How much do pies cost?</h1>
+
+	<div>
+		<label>Price</label>
+		<input type="text" name="price" value="30">
+	</div>
+
+	<div>
+		<label>Quantity</label><span class="quantlab"></span>
+		<input type="range" name="quantity" min="1" max="10" step="1" value="1">
+	</div>
+
+
+	<div class="result"></div>
+
+<script type="text/javascript">
+	//grab all the input
+	const price = document.querySelector('[name=price]');
+	const quantity = document.querySelector('[name=quantity]');
+	const final = document.querySelector('.result');
+	const quantlabel = document.querySelector('.quantlab');
+
+
+	function grabPrice() {
+		const money = price.value;
+		const amount = quantity.value;
+		const totalres = money * amount;
+		console.log(totalres);
+		final.innerText = "$" +totalres.toFixed(2);
+
+	}
+
+	function updateQuantLabel() {
+		const quantityLab = quantity.value;
+		quantlabel.innerText = quantityLab;
+	}
+
+	//run the funcion and get the default total value from price input value 
+	grabPrice();
+
+
+	price.addEventListener('input', grabPrice);
+	quantity.addEventListener('input', grabPrice);
+	quantity.addEventListener('input', updateQuantLabel);
+
+</script>
+
+</body>
+</html>
