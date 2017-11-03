@@ -1,0 +1,25 @@
+@charset "UTF-8";
+/* CSS Document */
+body {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background-color: #eee;
+  font-family: "Arial", sans-sarif;
+  font-size: 14px;
+}
+
+#container {
+  margin: 0 auto;
+  overflow: auto;
+  padding: 5%;
+}
+
+section {padding: 0 10%}
+
+header {text-align: center;border-bottom: #fff dashed 1px;}
+header h1 {margin: 0;padding: 0;}
+header p {padding: 0;margin-top: 5px;}
+
+#results h3 {background-color: red;padding: 10px;margin: 10px 0;}
+#results span {color: #000;font-weight: bold;}
