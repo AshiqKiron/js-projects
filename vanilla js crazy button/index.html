@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crazy buttons</title>
+</head>
+<style type="text/css">
+	body {padding: 10%; text-align: center;}
+	button {background-color: red;padding: 2%;font-size: 20px;color: white}
+	.btn {position: absolute;top: 30px;left: 30%; width:auto;transition: .5s ease all;}
+</style>
+<body>
+		
+			<button type="button" class="btn">click me</button>
+			<button type="button" class="btn">click me</button>
+			<button type="button" class="btn">click me</button>
+	
+
+	
+
+
+<script type="text/javascript">
+	const buttons = document.querySelectorAll('.btn');
+
+	function calc(e) {
+		//target all the button
+		const buttons = e.target;
+		console.log(e.target);
+
+		const offsetTop = Math.random() * (window.innerHeight - buttons.clientHeight);
+		const offsetLeft = Math.random() * (window.innerWidth - buttons.clientWidth);
+		console.log(offsetLeft, offsetTop);
+
+		buttons.style.top = offsetTop + 'px';
+		buttons.style.left = offsetLeft + 'px';
+
+
+	}
+
+	buttons.forEach(button => button.addEventListener('mouseenter', calc));
+
+</script>
+
+</body>
+</html>
