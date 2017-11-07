@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scroll Progress</title>
+</head>
+<style type="text/css">
+	.content {background-color: #fff;padding: 5%;font-size: 19px;line-height: 2;min-height: 3000px;}
+	body {background-color: #eee;padding: 5%}
+	.scroll-line {position: fixed;top: 0;left: 0;height: 5px;background-color: red;transition:  0.5s cubic-bezier(0.075, 0.82,0.165, 1) width}
+</style>
+<body>
+		
+	<div class="scroll-line"></div>
+
+	<div class="container">
+		<div class="content">
+			Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  v Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor  Lorem ipsum dolor  Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor 
+		</div>
+	</div>
+	
+
+
+<script type="text/javascript">
+
+	const scrollBar = document.querySelector('.scroll-line');
+
+	function scrollLine() {
+		const windowHeight = window.innerHeight;
+		const fullHeight = document.body.clientHeight;
+		//how far from the top we scrolled
+		const scrolled = window.scrollY;
+		const parcentScrolled = (scrolled / (fullHeight - windowHeight)) * 100;
+
+		scrollBar.style.width = `${parcentScrolled}%`;
+	}
+
+	window.addEventListener('scroll', debounce(scrollLine));
+	/*window.addEventListener('scroll', debounce(function () {
+		console.log('as');
+	}, 250));*/
+
+	//debounce function to stop the scroll rapid fire
+	function debounce(func, wait = 15, immediate) {
+	  var timeout;
+	  return function() {
+	    var context = this, args = arguments;
+	    var later = function() {
+	      timeout = null;
+	      if (!immediate) func.apply(context, args);
+	    };
+	    var callNow = immediate && !timeout;
+	    clearTimeout(timeout);
+	    timeout = setTimeout(later, wait);
+	    if (callNow) func.apply(context, args);
+	  };
+	}
+
+</script>
+
+</body>
+</html>
