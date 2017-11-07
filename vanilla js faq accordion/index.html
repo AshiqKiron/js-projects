@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Accordion</title>
+</head>
+<style type="text/css">
+	/*html {overflow-y: scroll;}*/
+	body {padding: 5%;background-color: #efefef;}
+	ul {list-style: none;}
+	.accordion {background-color: #fff;border-radius: 5px;padding: 5%;}
+	.question {border-top: 1px solid #eee;padding: 20px;cursor: pointer}
+	.question h2 {font-size: 20px;margin: 0;color: #C00C00;}
+	span {float: right;}
+	.answer {transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) all;max-height: 0;overflow: hidden;}
+	.answer p {padding: 20px;}
+	.accordion li.open .answer {max-height: 150px;}
+	.accordion li.open span {transform: rotate(180deg);transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) all;}
+</style>
+<body>
+		
+	
+<div class="container">
+	<div class="accordion">
+		<ul class="list-unstyled">
+			<li class="open">
+				<div class="question">
+					<h2>Will I be rich? <span>↓</span></h2>
+				</div>
+				<div class="answer">
+					<p>lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor</p>
+				</div>
+			</li>
+			<li>
+				<div class="question">
+					<h2>Question two <span>↓</span></h2>
+				</div>
+				<div class="answer">
+					<p>lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor</p>
+				</div>
+			</li>
+			<li>
+				<div class="question">
+					<h2>love me? <span>↓</span></h2>
+				</div>
+				<div class="answer">
+					<p>lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+	
+
+
+<script type="text/javascript">
+
+	const accordion = document.querySelector('.accordion');
+	const items = accordion.querySelectorAll('li');
+	const questions = accordion.querySelectorAll('.question');
+
+	function toggle() {
+		//get the parent elem of question node
+		const thisItem = this.parentNode;
+
+		items.forEach(item => {
+			if(thisItem == item) {
+				thisItem.classList.toggle('open');
+				return;
+			}
+
+			item.classList.remove('open');
+		});
+		
+	}
+
+
+	questions.forEach(question => question.addEventListener('click', toggle));
+
+</script>
+
+</body>
+</html>
