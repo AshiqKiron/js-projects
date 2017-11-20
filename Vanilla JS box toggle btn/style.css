@@ -1,0 +1,44 @@
+body {
+  font-family: Lato,sans-serif;
+  margin: 0;
+  padding: 0; }
+.unit {
+  float: left;
+  width: 25%;
+  min-height: 3em;
+  padding: 1em 0;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  /* border: 1px solid salmon; */
+}
+.hidden {
+  width: 0;
+  height: 0;
+  min-height: auto;
+  opacity: 0;
+}
+.shade-original {
+  background-color: khaki; 
+}
+.shade-added {
+  background-color: peachpuff;
+}
+
+/* general */
+*,
+*::before,
+*::after {
+ box-sizing: border-box;
+}
+.demo-tiles {
+  text-align: center;
+  padding: 2em 0;
+  min-height: 100vh;
+  overflow: auto;
+}
+.button {
+  font-size: 1.25rem;
+}
+.container {
+  border-color: rgba(0,0,0,.075)
+}
