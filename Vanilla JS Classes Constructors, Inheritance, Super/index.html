@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Class, Constructor, Inheritance</title>
+</head>
+<body>
+
+<!-- tutorial link - https://sabe.io/classes/javascript/classes -->
+
+<script type="text/javascript">
+
+	//using constructor
+	class Pet {
+		constructor(name, weight, price) {
+			this.name = name;
+			this.weight = weight;
+			this.price = price;
+		}
+
+		getInfo() {
+			return "Hi, my name is " + this.name +". I weigh " + this.weight + " pound and I cost $" +this.price+".";
+		}
+	}
+	var pet1 = new Pet("Oreo", 20, 200);
+	console.log(pet1.getInfo());
+
+	//inheritence
+	class Dog extends Pet {
+		bark() {
+			console.log("Bark");
+		}
+	}
+
+	var dog = new Dog("Cooper", 20, 200);
+	console.log(dog.getInfo());
+	dog.bark();
+
+	//super keyword
+	class Cat extends Pet {
+		constructor(name,weight,price,brand) {
+			super(name,weight,price);
+			this.brand = brand;
+		}
+
+		getFavoriteBrand() {
+			return this.brand;
+		}
+
+		getInfo() {
+			return "Hi, I'm a cat name " +this.name+ " and I like "+this.brand+". I weigh "+this.weight+" pounds and "+this.price+".";
+		}
+	}
+
+	var honey = new Cat ("Honey", 15,300, "Purina");
+	console.log(honey.getInfo());
+	console.log(honey.getFavoriteBrand());
+</script>
+
+</body>
+</html>
