@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Humanize URL</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div id="app">
+     <h1>{{message}}</h1>
+     <p>
+       Visit: <a :href="url">{{cleanURL}}</a>
+     </p>
+     <input type="text" name="form-control" v-model="url">
+     <button @click="humanizeURL" class="btn btn-primary">Humanize Me</button>
+     
+     <!-- Count buttons -->
+     <!-- <input type="text" v-model="message"> -->
+     <!-- <button @click="countUp" class="btn btn-primary">Count Up</button>
+     <button @click="countDown" class="btn btn-primary">Count Down</button> -->
+    
+    </div>
+  </body>
+
+  <script src="https://unpkg.com/vue@2.5.9/dist/vue.js"></script>
+
+  <script>
+    var app = new Vue({
+      el : '#app',
+      data: {
+        message: 'Hello Vue World',
+        url : '',
+        cleanURL: ''
+      },
+      methods: {
+        humanizeURL: function () {
+          this.cleanURL = this.url.replace(/^https?:\/\//, '').replace(/\/$/, '')
+        }
+        /*countUp: function () {
+          this.count += 1
+        },
+        countDown: function () {
+          this.count -= 1;
+        }*/
+      }
+    })
+  </script>
