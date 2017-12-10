@@ -1,0 +1,14 @@
+.hero {
+    background: grey;
+    padding: 50px 0;
+    min-height: 500px;
+    position: relative;
+}
+body {font-size: 16px;line-height: 1.6em;}
+header .navbar {margin: 0;border-radius:0; }
+footer {text-align: center;padding: 30px 0;font-size: 14px;background: blue;color: #fff}
+.hero-content {position: absolute;top: 50%;text-align:center;width:100%;}
+.hero-content h2 {color: #fff;font-size: 80px;}
+.hero-content p {color: #fff;font-size: 40px;margin-bottom: 30px;}
+.hero-content .btn {border-radius: 2px;padding: 20px 30px;}
+main {min-height: 500px;padding: 50px 0;}
