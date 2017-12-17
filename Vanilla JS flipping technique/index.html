@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Vanilla js fliping js</title>
+</head>
+<body>
+
+    <div class="app">
+      <div class="scene -gallery">
+        <div class="item" data-key="owl">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-owl.png" alt="" />
+        </div>
+        <div class="item" data-key="deer">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-deer.png" alt="" />
+        </div>
+        <div class="item" data-key="hipster">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-hipster.png" alt="" />
+        </div>
+        <div class="item" data-key="ram">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-ram.png" alt="" />
+        </div>
+        <div class="item" data-key="dog">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-dog.png" alt="" />
+        </div>
+        <div class="item" data-key="ram-side">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-sideram.png" alt="" />
+        </div>
+        <div class="item" data-key="ram-horns">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-multiram.png" alt="" />
+        </div>
+        <div class="item" data-key="gorilla">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-gorilla.png" alt="" />
+        </div>
+        <div class="item" data-key="bird">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-bird.png" alt="" />
+      </div>
+            <div class="item" data-key="owl2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-owl.png" alt="" />
+        </div>
+        <div class="item" data-key="deer2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-deer.png" alt="" />
+        </div>
+        <div class="item" data-key="hipster2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-hipster.png" alt="" />
+        </div>
+        <div class="item" data-key="ram2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-ram.png" alt="" />
+        </div>
+        <div class="item" data-key="dog2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-dog.png" alt="" />
+        </div>
+        <div class="item" data-key="ram-side2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-sideram.png" alt="" />
+        </div>
+        <div class="item" data-key="ram-horns2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-multiram.png" alt="" />
+        </div>
+        <div class="item" data-key="gorilla2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-gorilla.png" alt="" />
+        </div>
+        <div class="item" data-key="bird2">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/kl-bird.png" alt="" />
+      </div>
+    </div>
+      <div class="scene -detail">
+        <div class="detail">
+          <img />
+          <div class="content">
+            <div class="title">Great Horned Owl</div>
+            <div class="creator">Krystine Lopez</div>
+            <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus, blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio, fugit, quas ipsa impedit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+<script type="text/javascript">
+    const items = document.querySelectorAll('.item');
+    const detailItem = document.querySelector('.detail');
+    const detailScene = document.querySelector('.scene.-detail');
+
+    detailScene.style.display = 'none';
+
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        const itemImage = item.querySelector('img');
+        
+        detailItem
+          .setAttribute('data-image', item.getAttribute('data-key'));
+        
+        detailItem
+          .querySelector('img')
+          .setAttribute('src', itemImage.getAttribute('src'));
+        
+        detailScene.style.display = 'block';
+        item.style.opacity = 0;
+        
+        let firstRect = itemImage.getBoundingClientRect();
+        let lastRect = detailItem.getBoundingClientRect();
+        
+        detailItem.animate([
+          {
+            transform: `
+              translateX(${firstRect.left - lastRect.left}px)
+              translateY(${firstRect.top - lastRect.top}px)
+              scale(${firstRect.width / lastRect.width})
+            `
+          },
+          {
+            transform: `
+              translateX(0)
+              translateY(0)
+              scale(1)
+             `
+          }
+        ], {
+          duration: 600,
+          easing: 'cubic-bezier(0.2, 0, 0.2, 1)'
+        });
+      });
+    });
+
+    detailItem.addEventListener('click', () => {
+      const itemImage = document .querySelector(`[data-key="${detailItem.getAttribute('data-image')}"]`);
+      
+      let itemImageRect = itemImage.getBoundingClientRect();
+      let detailItemRect = detailItem.getBoundingClientRect();
+
+      detailScene.style.display = 'none';
+      itemImage.style.opacity = 1;
+      
+      itemImage.animate([
+          {
+            zIndex: 2,
+            transform: `
+              translateX(${detailItemRect.left - itemImageRect.left}px)
+              translateY(${detailItemRect.top - itemImageRect.top}px)
+      scale(${detailItemRect.width / itemImageRect.width})
+            `
+          },
+          {
+            zIndex: 2,
+            transform: `
+              translateX(0)
+              translateY(0)
+              scale(1)
+             `
+          }
+        ], {
+          duration: 600,
+          easing: 'cubic-bezier(0.2, 0, 0.2, 1)'
+        });
+    });
+</script>
+</body>
+</html>
