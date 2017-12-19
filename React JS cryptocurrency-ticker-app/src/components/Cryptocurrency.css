@@ -1,0 +1,25 @@
+.cryptocurrency {
+    padding: 1rem 2rem 2rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    min-width: 9rem;
+    border: solid 1px rgba(0, 0, 0, 0.05);
+}
+.cryptocurrency p {
+    color: rgba(0, 0, 0, 0.75);
+}
+.cryptocurrency-name {
+    font-size: 1.25rem;
+}
+.bitcoin {
+    background-color: #fbe2c3;
+    border-bottom: solid 4px #f7931a;
+}
+.ethereum {
+    background-color: #c2c9ff;
+    border-bottom: solid 4px #454a75;
+}
+.litecoin {
+    background-color: #ececec;
+    border-bottom: solid 4px #bebebe;
+}
