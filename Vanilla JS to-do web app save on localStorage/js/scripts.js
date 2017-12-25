@@ -9,7 +9,7 @@ const input = document.getElementById('item');
 let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
 
 
-//Add new li to ul with a named function
+//Add new li to ul with an anonymous Arrow function (es6 Feature) and save to a variable
 const liMaker = (text) => {
   //create li element
   const li = document.createElement('li');
