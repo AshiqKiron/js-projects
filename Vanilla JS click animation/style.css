@@ -1,0 +1,39 @@
+body {
+  /* essential styling */
+  background: linear-gradient(90deg, #ff9800 var(--stop, 0%), #3c3c3c 0);
+  background-size: 5em; /*make vertical*/
+}
+body:after {
+  /* just to prettify stuff */
+  /* use absolute positioning because 
+   * margin: 0 on body 
+   * breaks Edge for some reason */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font: calc(16vmin + 3rem)/100vh Leckerli One, cursive;
+  text-align: center;
+  cursor: pointer;
+  content: 'Click!';
+}
+@supports (mix-blend-mode: screen) {
+  body:after {
+                /* in supports because 
+                 * background: inherit 
+                 * breaks Edge for some reason 
+                 * (sorry, I had no better idea) */
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: invert(1) grayscale(1) contrast(3);
+  }
+}
+
+--c0: #ff9800;
+--c1: #3c3c3c;
+background: linear-gradient(90deg, 
+    var(--gc0, var(--c0)) var(--stop, 0%), 
+    var(--gc1, var(--c1)) 0)
