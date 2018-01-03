@@ -9,21 +9,28 @@
 <body>
 
 
-<!-- Trigger the Modal -->
-<img id="myImg" src="index_02.jpg" alt="Trolltunga, Norway" width="300" height="200">
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- The Close Button -->
-  <span class="close">&times;</span>
-
-  <!-- Modal Content (The Image) -->
-  <img class="modal-content" id="img01">
-
-  <!-- Modal Caption (Image Text) -->
-  <div id="caption"></div>
+<div style="text-align:center">
+  <h2>Tabbed Image Gallery</h2>
+  <p>Click on the images below:</p>
 </div>
+
+<!-- The four columns -->
+<div class="row">
+  <div class="column">
+    <img src="index_02.jpg" alt="Nature" style="width:100%" ">
+  </div>
+  <div class="column">
+    <img src="index_01.jpg" alt="Fjords" style="width:100%" ">
+  </div>
+</div>
+
+<div class="container">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <img id="expandedImg" style="width:100%">
+  <div id="imgtext"></div>
+</div>
+
 
   <script src="scripts.js"></script>
 </body>
