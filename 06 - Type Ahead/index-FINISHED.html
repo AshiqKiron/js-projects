@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+
+
+  
+//endpoint, fectching the data from
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+//put data into an empty array
+const cities = [];
+//new browser API fetch
+fetch(endpoint)
+  //retruns a promise(blob) and add 'json' method to it to convert raw data into json which return another promise
+  .then(blob => blob.json())
+  //get the raw data now with es6 spread function
+  .then(data => cities.push(...data));
+
+//
+function findMatches(wordToMatch, cities) {
+  //filter the cities
+  return cities.filter(place => {
+    // here we need to figure out if the city or state matches what was searched
+    //g = global, i = case insentitive
+    //create variable regex to put inside match function
+    //coz you can't put regex inside the function
+    const regex = new RegExp(wordToMatch, 'gi');
+    //return if city or state matches
+    return place.city.match(regex) || place.state.match(regex)
+  });
+}
+
+//Put comma between city and state name 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function displayMatches() {
+  //find searched value and store into variable
+  const matchArray = findMatches(this.value, cities);
+  //loop over it
+  const html = matchArray.map(place => {
+    //find the value and replce with cityName & stateName variables' html
+    const regex = new RegExp(this.value, 'gi');
+    const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+    return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${numberWithCommas(place.population)}</span>
+      </li>
+    `;//Turn array with multiple items into one big string
+  }).join('');
+  //set the html to return formatted html
+  suggestions.innerHTML = html;
+}
+
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
+
+</script>
+  </body>
+</html>
