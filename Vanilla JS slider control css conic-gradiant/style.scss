@@ -1,0 +1,144 @@
+$bg: #3d3d4a;
+$fsr: 4;
+$p: 39%;
+$k: .1;
+$t: .5s;
+$track-w: 25em;
+$track-h: .02*$track-w;
+$thumb-d: $k*$track-w;
+
+$chart-d: (1 - 2*$k)*100%;
+
+@mixin track() {
+	border: none;
+	width: $track-w; height: $track-h;
+	border-radius: .5*$track-h;
+	background: #343440
+}
+
+@mixin thumb() {
+	border: none;
+	width: $thumb-d; height: $thumb-d;
+	border-radius: 50%;
+	transform: scale(.7);
+	background: #e6323e;
+	filter: saturate(.7);
+	transition: transform $t linear, filter $t
+}
+
+@mixin thumb-focus() {
+	transform: none;
+	filter: none
+}
+
+%thumb-val {
+  position: absolute;
+  width: $thumb-d; height: $thumb-d;
+	opacity: 0;
+  color: #fff;
+  pointer-events: none;
+	transition: opacity $t ease-in-out
+}
+
+* { margin: 0 }
+
+body { background: $bg }
+
+.wrap {
+	margin: 2em auto;
+	width: $track-w;
+	font: 2vmin trebuchet ms, arial, sans-serif;
+	
+	@media (max-width: 500px), 
+				 (max-height: 500px) { font-size: 10px }
+  @media (min-width: 1600px), 
+				 (min-height: 1600px) { font-size: 32px }
+	
+	&:not(.full) {
+		position: relative;
+		
+		output {
+			@extend %thumb-val;
+			top: 0;
+			transform: translate(calc(var(--val)/100*#{$track-w - $thumb-d}))
+		}
+	}
+	
+	&.full {
+		position: relative;
+		height: $track-w;
+		
+		[type='range'] {
+			display: block;
+			transform-origin: 100% 0;
+			transform: rotate(-90deg) translatey(-100%);
+		}
+		
+		output {
+			width: $chart-d; height: $chart-d;
+			border-radius: 50%;
+			color: #7a7a7a;
+			font-size: $fsr*1em;
+			font-weight: 700;
+			
+			&:before {
+				@extend %thumb-val;
+				right: 0; bottom: 0;
+				transform: translatey(calc(var(--val)/-100*#{$track-w - $thumb-d}));
+				line-height: $thumb-d;
+				text-align: center;
+				font-size: 1em/$fsr;
+				font-weight: 200;
+				counter-reset: val var(--val);
+				content: counter(val)'%'
+			}
+		}
+	}
+}
+
+[type='range'] {
+	&, &::-webkit-slider-thumb { -webkit-appearance: none }
+
+	padding: 0;
+	width: $track-w; height: $thumb-d;
+	background: transparent;
+	font: inherit;
+	cursor: pointer;
+
+	&::-webkit-slider-runnable-track { @include track }
+	&::-moz-range-track { @include track }
+	&::-ms-track { @include track }
+
+	&::-webkit-slider-thumb {
+		margin-top: .5*($track-h - $thumb-d);
+		@include thumb
+	}
+	&::-moz-range-thumb { @include thumb }
+	&::-ms-thumb {
+		margin-top: 0;
+		@include thumb
+	}
+	
+	&::-ms-tooltip { display: none }
+	
+	+ output {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: radial-gradient($bg $p, transparent $p + .5%),
+			conic-gradient(#e64c65 calc(var(--val)*1%), #41a8ab 0%);
+		
+		&:after { content: '%' }
+	}
+	
+	&:focus {
+		outline: none;
+		
+		&::-webkit-slider-thumb { @include thumb-focus }
+		&::-moz-range-thumb { @include thumb-focus }
+		&::-ms-thumb { @include thumb-focus }
+		
+		.wrap:not(.full) & + output, 
+		.wrap.full & + output:before { opacity: 1 }
+	}
+}
