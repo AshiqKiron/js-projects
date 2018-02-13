@@ -1,3 +1,4 @@
+/* Tutorial Link - https://www.ibenic.com/react-render-content-wp-rest-api/*/
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
