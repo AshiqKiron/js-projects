@@ -1,0 +1,290 @@
+<!-- https://www.smashingmagazine.com/2018/02/jquery-vue-javascript/ -->
+
+<style>
+    #app {
+  margin: 50px;
+}
+
+.red { 
+  color: red; 
+}
+
+p {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  width: 100px;
+}
+
+#app {
+  text-align: center;
+  padding: 70px;
+  max-width: 360px;
+  font-size: 16px;
+  margin: 0 auto;
+  display: table;
+  line-height: 2em;
+}
+
+label {
+  padding-right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+button {
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 3px;
+  background: orangered;
+}
+
+
+
+
+#app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-family: 'Work Sans', sans-serif;
+}
+
+form {
+  width: 300px;
+  padding: 10px 40px;
+}
+form label {
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  font-weight: bold;
+}
+form input, form textarea {
+  border: 1px solid #ccc;
+  color: #333;
+  width: calc(100% - 30px);
+}
+form input, form textarea, form button {
+  border-radius: 4px;
+  padding: 8px 15px;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+}
+form div {
+  margin: 20px 0;
+}
+
+button {
+  color: white;
+  border: none;
+  width: 100%;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #ccc;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  -webkit-transition: 0.25s all ease;
+  transition: 0.25s all ease;
+}
+button:hover {
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+}
+
+.active {
+  background: #5968d7;
+}
+
+pre-content {
+  width: 300px;
+}
+
+</style>
+<!-- 
+    /********************************* 
+    capture information when user types
+    **********************************/
+    <main>
+    <div id="app">
+        <label for="thing">Name:</label>
+        <input id="thing" type="text" v-model="name"/>
+        <p>{{name}}</p>
+      </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+  <script>
+  
+    //this a vue instance
+    new Vue({
+        //targets the div id app
+        el: '#app',
+        data: {
+            name:'' //stores data values for 'name'
+        }
+    }) -->
+
+
+    
+   <!--  
+    
+    /********************************* 
+    capture information when user types and then hit enter
+    **********************************/
+    
+    <main>
+        <div id="app">
+            <label for="thing">Name:</label>
+            <input id="thing" type="text" v-model.lazy="name"/>
+            <p>{{name}}</p>
+          </div>
+      </main>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+      <script>
+
+    
+    new Vue({
+        //targets the div id app
+        el: '#app',
+        data: {
+            name:'' //stores data values for 'name'
+        }
+    }) -->
+
+<!-- 
+    /********************************* 
+     Toggle class when clicked
+    **********************************/
+    
+    <main>
+        <div id="app">
+            <button @click="active = !active" :aria-pressed="active ? 'true' : 'false'">Toggle Me</button>
+            <p :class="{red:active}">Sometimes I need to be styled differently</p>
+          </div>
+      </main>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+      <script>
+
+
+    new Vue({
+        //targets the div id app
+        el: '#app',
+        data: {
+            active: false //stores data values for 'name'
+        }
+    })
+ -->
+
+
+ <!-- 
+ /********************************* 
+    Hidding and showing button
+    **********************************/
+    <main>
+        <div id="app">
+            <button @click="show = !show" :aria-expanded="show? 'true' : 'false'">Toggle panel</button>
+            <p v-if="show">hello</p>
+          </div>
+      </main>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+      <script>
+
+   
+    new Vue({
+        //targets the div id app
+        el: '#app',
+        data: {
+            show: true
+        }
+    }) -->
+
+
+
+
+<!-- 
+    /********************************* 
+    Hidding and showing element with data input
+    **********************************/
+    <main>
+        <div id="app">
+            <label for="textarea">What is your favorite color?</label>
+            <textarea id="textarea" v-mode="tacos"></textarea>
+            <br>
+            <button v-show="tacos">Let us know!</button>
+          </div>
+      </main>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+      <script>
+
+   
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                tacos: ''
+            }
+        }
+    })
+ -->
+
+
+
+
+
+ <div id="app">
+        <form @submit.prevent="submitForm">
+          <div>
+            <label for="name">Name:</label><br>
+            <input id="name" type="text" v-model="name" required/>
+          </div>
+          <div>
+            <label for="email">Email:</label><br>
+            <input id="email" type="email" v-model="email" required/>
+          </div>
+          <div>
+            <label for="caps">HOW DO I TURN OFF CAPS LOCK:</label><br>
+            <textarea id="caps" v-model="caps" required></textarea>
+          </div>
+          <button :class="[name ? activeClass : '']" type="submit">Submit</button>
+          <div>
+            <h3>Response from server:</h3>
+            <pre>{{ response }}</pre>
+          </div>
+        </form>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+      <script>
+
+    /********************************* 
+    Vue form submission
+    **********************************/
+    new Vue({
+        el: '#app',
+        data(){
+            return{
+                name: '',
+                email: '',
+                caps: '',
+                response: '',
+                activeClass: 'active'
+            }
+        },
+        methods: {
+            submitForm() {
+                axios.post('//jsonplaceholder.typicode.com/posts', {
+                    name:this.name,
+                    email: this.email,
+                    caps: this.caps
+                }).then(response => {
+                    this.response = JSON.stringify(response, null, 2)
+                })
+            }
+        }
+    })
+
+
+  </script>
