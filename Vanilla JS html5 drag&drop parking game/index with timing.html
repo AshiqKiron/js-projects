@@ -1,0 +1,282 @@
+<!-- https://css-tricks.com/creating-a-parking-game-with-the-html-drag-and-drop-api/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>html5 drag and drop</title>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.1.1/moment-range.js"></script>
+  <style>
+ body {
+  background-color: #E2E8F3;
+  font-size: .8em;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+img {
+  cursor: pointer;
+  width: 200px;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.parking-rules {
+  padding: 0;
+}
+
+.parking-rules > .parking-rule {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background: #FDFEFE;
+  padding: 16px;
+  margin: 12px;
+}
+
+.parking-rule:nth-child(n) {
+  border: 2px solid #538cff;
+}
+
+.parking-rule:nth-child(2n) {
+  border: 2px solid #d51c00;
+}
+
+.parking-rule:nth-child(3n) {
+  border: 2px solid #ffd92e;
+}
+
+.parking-rule ul {
+  padding: 0;
+}
+
+.parking-rule li:first-child {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.drop-zone {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  background: #878787;
+  color: white;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <ul class="parking-rules">
+         <li class="parking-rule">
+           <ul>
+             <li> Ambulance Parking Only</li>
+             <li> 9pm to 3am </li>
+             <li> Mon Thru Fri  </li>
+           </ul>
+         </li>
+         <li class="parking-rule">
+           <ul>
+             <li> Fire truck Parking Only</li>
+             <li>24hrs</li>
+             <li> Saturday to Sunday </li>
+           </ul>
+          </li>
+          <li class="parking-rule">
+           <ul>
+             <li> Car Parking</li>
+             <li> 3am to 3pm </li>
+             <li> Mon Thru Fri  </li>
+           </ul>
+          </li>
+          <li class="parking-rule">
+           <ul>
+             <li> Bicycle Parking</li>
+             <li> 3pm to 9pm </li>
+             <li> Mon Thru Fri  </li>
+           </ul>
+          </li>
+       </ul>
+       <section class="drop-zone">
+       </section>
+       <section class="drag-vehicle">
+         <ul class="vehicles">
+         <li>
+           <!-- draggable objects must have draggable attribute -->
+           <img id="ft" alt="fire truck" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Ftruck-clip-art-fire-truck4.png?1519011787956">
+         </li>
+         <li>
+           <img id="ambulance" alt="ambulance" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Fambulance5.png?1519011787610">
+         </li>
+         <li>
+           <img id="car" alt="car" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Fcar-20clip-20art-1311497037_Vector_Clipart.png?1519011788408">
+         </li>
+         <li>
+           <img id="bike" alt="bicycle" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Fbicycle-20clip-20art-bicycle3.png?1519011787816">
+         </li>
+         </ul>
+     </section>
+     </div>
+
+<script>
+
+let dragged; //store the object being dragged
+window['moment-range'].extendMoment(moment);
+
+const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+const parkingRules =  {
+  ambulance: {
+    days: weekdays,
+    times: createRange(moment().set('hour', 21), moment().add(1, 'day').set('hour', 3)) // 9pm to 3am (the next day)
+  },
+  'fire truck': {
+    days: ['Saturday', 'Sunday']
+  },
+  car: {
+    days: weekdays,
+    times: createRange(moment().set('hour', 3), moment().set('hour', 15)) // 3am - 3pm
+  },
+  bicycle: {
+    days: weekdays,
+    times: createRange(moment().set('hour', 15), moment().set('hour', 21)) // 3pm to 9pm
+  }
+};
+
+function createRange(start, end) {
+  if (start && end) {
+    return moment.range(start, end);
+  }
+}
+
+function onDragStart(event) {
+  let target = event.target;
+  if (target && target.nodeName === 'IMG') { // If target is an image
+    dragged = target;
+    // Make it half transparent
+    event.target.style.opacity = .3;
+  }
+}
+
+function onDragEnd(event) {
+  if (event.target && event.target.nodeName === 'IMG') {
+      // Reset the transparency
+      event.target.style.opacity = '';
+    dragged = null;
+  }
+}
+
+function onDragOver(event) {
+  // Prevent default to allow drop
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move"
+}
+
+function onDragLeave(event) {
+  event.target.style.background = '';
+}
+
+function getDay() {
+  return moment().format('dddd'); // format as 'monday' not 1
+}
+
+function getHours() {
+  return moment().hour();
+}
+
+function canPark(vehicle) {
+  /* Check the time and the type of vehicle being dragged
+   * to see if it can park at this time
+   */
+  if (vehicle && parkingRules[vehicle]) {
+    const rules = parkingRules[vehicle];
+    const validDays = rules.days;
+    const validTimes = rules.times;
+    const curDay = getDay();
+    if (validDays) {
+      /* If the current day is included on the parking days for the vehicle
+       * And if the current time is within the range
+       */
+      return validDays.includes(curDay) && (validTimes ? validTimes.contains(moment()) : true); 
+      /* Moment.range has a contains function that checks
+       * to see if your range contains a moment. 
+         https://github.com/rotaready/moment-range#contains
+        */
+    }
+  }
+  return false;
+}
+
+function onDragEnter(event) {
+  const target = event.target;
+  if (dragged && target) {
+    const vehicleType = dragged.alt; // e.g bicycle, ambulance
+    if (canPark(vehicleType)) {
+      event.preventDefault();
+      // Set the dropEffect to move
+      event.dataTransfer.dropEffect = 'move';
+      /* Change color to green to show it can
+       * be dropped 
+       */
+      target.style.background = '#1f904e';    
+     }
+    else {
+      /* Change color to red to show
+       * it can't be dropped. Notice we
+       * don't call event.preventDefault() here
+       * so the browser won't allow a drop
+       * by default
+       */
+      target.style.backgroundColor = '#d51c00'; 
+    }
+  }
+}
+
+function onDrop(event) {
+  const target = event.target;
+  if (target) {
+    const data = event.dataTransfer.getData('text');
+    const dragged = document.getElementById(data);
+    const vehicleType = dragged.alt;
+    target.style.backgroundColor = '';
+    if (canPark(vehicleType)) {
+       event.preventDefault();
+       // Get the id of the target and add the moved element to the target's DOM
+       dragged.style.opacity = '';
+       target.appendChild(dragged);
+    }
+  }
+}
+
+const vehicles = document.querySelector('.vehicles');
+const dropZone = document.querySelector('.drop-zone');
+
+// Adding event listeners
+vehicles.addEventListener('dragstart', onDragStart);
+vehicles.addEventListener('dragend', onDragEnd);
+dropZone.addEventListener('drop', onDrop);
+dropZone.addEventListener('dragenter', onDragEnter);
+dropZone.addEventListener('dragleave', onDragLeave);
+dropZone.addEventListener('dragover', onDragOver);
+    
+</script>
+
+
+</body>
+</html>

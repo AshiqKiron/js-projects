@@ -1,0 +1,133 @@
+<!-- https://css-tricks.com/creating-a-parking-game-with-the-html-drag-and-drop-api/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>html5 drag and drop</title>
+  <style>
+  ul li {
+  list-style-type: none;
+}
+img {
+  cursor: pointer;
+  width: 200px;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.drop-zone {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  background: #878787;
+  color: white;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+</head>
+<body>
+
+        <div class="container">
+                <section class="drop-zone">
+                </section>
+                <section class="drag-vehicle">
+                  <ul class="vehicles">
+              <li>
+                <!-- img elements don't need a draggable attribute -->
+                <img id="fire-truck" alt="fire truck" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Ftruck-clip-art-fire-truck4.png?1519011787956"/>
+              </li>
+              <li>
+                <img id="ambulance" alt="ambulance" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Fambulance5.png?1519011787610">
+              </li>
+              <li>
+                <img id="car" alt="car" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Fcar-20clip-20art-1311497037_Vector_Clipart.png?1519011788408">
+              </li>
+              <li>
+                <img id="bike" alt="bicycle" src="https://cdn.glitch.com/20f985bd-431d-4807-857b-e966e015c91b%2Fbicycle-20clip-20art-bicycle3.png?1519011787816">
+              </li>
+            </ul>
+
+
+<script>
+    // Adding event listeners
+    const vehicles = document.querySelector('.vehicles');
+    const dropZone = document.querySelector('.drop-zone');
+    vehicles.addEventListener('dragstart', onDragStart);
+    vehicles.addEventListener('dragend', onDragEnd);
+    
+    dropZone.addEventListener('drop', onDrop);
+    dropZone.addEventListener('dragenter', onDragEnter);
+    dropZone.addEventListener('dragleave', onDragLeave);
+    dropZone.addEventListener('dragover', onDragOver);
+
+    let dragged; // Keeps track of what's being dragged - we'll use this later! 
+
+    function onDragStart(event) {
+      let target = event.target;
+      if (target && target.nodeName === 'IMG') { // If target is an image
+        dragged = target;
+        //use the setData(type, data) method to add a dragged item to the drag data
+        event.dataTransfer.setData('text', target.id);
+        //he dropEffect property is used to control the feedback the user is given during a drag and drop operation. For example, it changes which cursor the browser displays while dragging. There are three effects: copy, move and link.
+        event.dataTransfer.dropEffect = 'move';
+        // Make it half transparent when it's being dragged
+        event.target.style.opacity = .3;
+      }
+    }
+    
+    function onDragEnd(event) {
+      if (event.target && event.target.nodeName === 'IMG') {
+        // Reset the transparency
+        event.target.style.opacity = ''; // Reset opacity when dragging ends 
+        dragged = null; 
+      }
+    }
+    
+    function onDragOver(event) {
+    // Prevent default to allow drop
+    event.preventDefault();
+    }
+
+    function onDragLeave(event) {
+    event.target.style.background = '';
+    }
+
+    function onDragEnter(event) {
+        const target = event.target;
+        if (target) {
+            event.preventDefault();
+            // Set the dropEffect to move
+            event.dataTransfer.dropEffect = 'move'
+            target.style.background = '#1f904e';
+        }
+    }
+
+    function onDrop(event) {
+        const target = event.target;
+        if ( target) {
+            target.style.backgroundColor = '';
+            event.preventDefault();
+            // Get the id of the target and add the moved element to the target's DOM
+            dragged.parentNode.removeChild(dragged);
+            dragged.style.opacity = '';
+            target.appendChild(dragged);
+        }
+    }
+    
+
+
+</script>
+</body>
+</html>
