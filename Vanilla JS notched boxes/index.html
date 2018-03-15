@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Notched Boxes</title>
+</head>
+
+<style type="text/css">
+	@import url("https://fonts.googleapis.com/css?family=Lato|Roboto:700");
+body {
+  height: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.4;
+  color: #ffdebd;
+  margin: 1rem;
+  background: radial-gradient(circle farthest-corner, #333, #111);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.module {
+  max-width: 400px;
+  padding: 3rem;
+  background: #f06d06;
+  --notchSize: 20px;
+  -webkit-clip-path: polygon(0% var(--notchSize), var(--notchSize) 0%, calc(100% - var(--notchSize)) 0%, 100% var(--notchSize), 100% calc(100% - var(--notchSize)), calc(100% - var(--notchSize)) 100%, var(--notchSize) 100%, 0% calc(100% - var(--notchSize)));
+          clip-path: polygon(0% var(--notchSize), var(--notchSize) 0%, calc(100% - var(--notchSize)) 0%, 100% var(--notchSize), 100% calc(100% - var(--notchSize)), calc(100% - var(--notchSize)) 100%, var(--notchSize) 100%, 0% calc(100% - var(--notchSize)));
+}
+
+h2 {
+  color: white;
+  margin: 0 0 1rem 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+input {
+  position: absolute;
+  top: 20px;
+  left: 5vw;
+  width: 90vw;
+}
+
+</style>
+<body>
+<!-- https://css-tricks.com/notched-boxes/ -->
+<div class="module">
+  <h2>I'm a notched module.</h2>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi minima neque sapiente itaque quos, mollitia facere earum laborum maxime vero voluptate repellendus quidem libero porro blanditiis obcaecati. Accusantium, sequi expedita.</p>
+</div>
+
+<input type="range" min="0" max="50" value="20">
+
+<script type="text/javascript">
+	var inp = document.querySelector("input");
+	var mod = document.querySelector(".module");
+
+	inp.addEventListener("input", function() {
+	  mod.style.setProperty("--notchSize", this.value + "px");
+	});
+</script>
+</body>
+</html>
