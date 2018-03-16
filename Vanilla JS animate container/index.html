@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+    body {
+  width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(223, 223, 223);
+}
+
+#container {
+  perspective: 40px;
+}
+
+#inner {
+  transition: transform 0.5s;
+  -webkit-transition: transform 0.5s;
+  box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
+}
+
+/*============================================================
+ * EXTRAS
+ *============================================================*/
+
+.demo-img {
+  /* Photo by David Marcu on Unsplash */
+  cursor: pointer;
+  border: solid white 15px;
+  background-image: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1953&q=80");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.demo-img:hover .demo-overlay {
+  opacity: 1;
+}
+
+.demo-overlay {
+  width: 25em;
+  padding: 10em 0;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.4s;
+}
+
+.demo-overlay svg {
+  display: block;
+  margin: 0 auto;
+  fill: white;
+}
+</style>
+<!-- https://css-tricks.com/animate-a-container-on-mouse-over-using-perspective-and-transform/ -->
+    <div id="container">
+        <div id="inner">
+          <div class="demo-img">
+            <div class="demo-overlay">
+              <svg version="1.1" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="60px" viewBox="0 0 612 612" xml:space="preserve">
+                <path d="M535.5,0h-153v76.5h114.75c21.133,0,38.25,17.136,38.25,38.25V229.5H612v-153C612,34.253,577.747,0,535.5,0z M0,76.5v153
+                                              h76.5V114.75c0-21.133,17.117-38.25,38.25-38.25H229.5V0h-153C34.253,0,0,34.253,0,76.5z M76.5,497.25V382.5H0v153
+                                              C0,577.747,34.253,612,76.5,612h153v-76.5H114.75C93.617,535.5,76.5,518.383,76.5,497.25z M535.5,497.25
+                                              c0,21.133-17.117,38.25-38.25,38.25H382.5V612h153c42.247,0,76.5-34.253,76.5-76.5v-153h-76.5V497.25z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        </div>
+        
+        <script type="text/javascript">
+        
+            var container = document.getElementById('container');
+            var inner = document.getElementById('inner');
+                    
+            var onMouseEnterHandler = function(event) {
+            update(event);
+            };
+            var onMouseLeaveHandler = function() {
+            inner.style = "";
+            };
+            var onMouseMoveHandler = function(event) {
+            if (isTimeToUpdate()) {
+                update(event);
+            }
+            };
+
+            container.onmouseenter = onMouseEnterHandler;
+            container.onmouseleave = onMouseLeaveHandler;
+            container.onmousemove = onMouseMoveHandler; 
+
+            var counter = 0;
+            var updateRate = 10;
+            var isTimeToUpdate = function() {
+              return counter++ % updateRate === 0;
+            };
+            
+            // Init
+var container = document.getElementById('container');
+var inner = document.getElementById('inner');
+// Mouse 
+var mouse = {
+  _x: 0,
+  _y: 0,
+  x: 0,
+  y: 0,
+  updatePosition: function(event) {
+    var e = event || window.event;
+    this.x = e.clientX - this._x;
+    this.y = (e.clientY - this._y) * -1;
+  },
+  setOrigin: function(e) {
+    this._x = e.offsetLeft + Math.floor(e.offsetWidth/2);
+    this._y = e.offsetTop + Math.floor(e.offsetHeight/2);
+  },
+  show: function() { return '(' + this.x + ', ' + this.y + ')'; }
+}
+// Track the mouse position relative to the center of the container.
+mouse.setOrigin(container);
+
+
+var update = function(event) {
+  mouse.updatePosition(event);
+  updateTransformStyle(
+    (mouse.y / inner.offsetHeight/2).toFixed(2),
+    (mouse.x / inner.offsetWidth/2).toFixed(2)
+  );
+};
+
+var updateTransformStyle = function(x, y) {
+  var style = "rotateX(" + x + "deg) rotateY(" + y + "deg)";
+  inner.style.transform = style;
+  inner.style.webkitTransform = style;
+  inner.style.mozTransform = style;
+  inner.style.msTransform = style;
+  inner.style.oTransform = style;
+};
+        </script>
+</body>
+</html>
