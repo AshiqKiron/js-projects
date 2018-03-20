@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notched Boxes</title>
+</head>
+
+<style type="text/css">
+a {
+  position: relative;
+  display: inline-block;
+  padding: 1.2em 2em;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: white;
+}
+a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border-radius: 4px;
+  -webkit-transition: -webkit-box-shadow .5s ease, -webkit-transform .2s ease;
+  transition: -webkit-box-shadow .5s ease, -webkit-transform .2s ease;
+  transition: box-shadow .5s ease, transform .2s ease;
+  transition: box-shadow .5s ease, transform .2s ease, -webkit-box-shadow .5s ease, -webkit-transform .2s ease;
+  will-change: transform;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(var(--ty, 0)) rotateX(var(--rx, 0)) rotateY(var(--ry, 0)) translateZ(var(--tz, -12px));
+          transform: translateY(var(--ty, 0)) rotateX(var(--rx, 0)) rotateY(var(--ry, 0)) translateZ(var(--tz, -12px));
+}
+a:hover::before {
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+a::after {
+  position: relative;
+  display: inline-block;
+  content: attr(data-title);
+  -webkit-transition: -webkit-transform .2s ease;
+  transition: -webkit-transform .2s ease;
+  transition: transform .2s ease;
+  transition: transform .2s ease, -webkit-transform .2s ease;
+  font-weight: bold;
+  letter-spacing: .01em;
+  will-change: transform;
+  -webkit-transform: translateY(var(--ty, 0)) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
+          transform: translateY(var(--ty, 0)) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform: perspective(800px);
+          transform: perspective(800px);
+}
+
+
+</style>
+<body>
+<!-- https://codepen.io/electerious/pen/rroqdL -->
+<a href="#" data-title="Awesome Button"></a>
+
+<script type="text/javascript">
+const docStyle = document.documentElement.style
+const aElem = document.querySelector('a')
+const boundingClientRect = aElem.getBoundingClientRect()
+
+aElem.onmousemove = function(e) {
+
+  const x = e.clientX - boundingClientRect.left
+  const y = e.clientY - boundingClientRect.top
+  
+  const xc = boundingClientRect.width/2
+  const yc = boundingClientRect.height/2
+  
+  const dx = x - xc
+  const dy = y - yc
+  
+  docStyle.setProperty('--rx', `${ dy/-1 }deg`)
+  docStyle.setProperty('--ry', `${ dx/10 }deg`)
+  
+}
+
+aElem.onmouseleave = function(e) {
+  
+  docStyle.setProperty('--ty', '0')
+  docStyle.setProperty('--rx', '0')
+  docStyle.setProperty('--ry', '0')
+  
+}
+
+aElem.onmousedown = function(e) {
+  
+  docStyle.setProperty('--tz', '-25px')
+  
+}
+
+document.body.onmouseup = function(e) {
+  
+  docStyle.setProperty('--tz', '-12px')
+  
+}
+</script>
+</body>
+</html>
