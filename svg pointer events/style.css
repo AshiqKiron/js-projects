@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+  display: flex;  
+}
+
+label {
+  font-weight: bold;
+}
+
+div {
+  width: 250px;
+}
+
+#output {
+  background: hsla(276, 96%, 80%, .5);
+  height: 300px;
+  overflow-y: scroll;
+  padding: 1rem;
+}
+
+button {
+  background: #88cdd5;
+  border: 0;
+  color: #222;
+  font-size: 18px;
+  padding: .5em 1em;
+}

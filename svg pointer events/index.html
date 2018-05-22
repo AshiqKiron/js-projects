@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>How adding pointer-events: visible affects interactivity</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  
+
+</head>
+<body>
+<svg width="350" height="350" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>circle</title>
+<!-- Added cursor="pointer" to force a cursor in Chrome -->
+<circle stroke="#88CDD5" fill="none" stroke-width="30"  cx="160" cy="160" r="140" cursor="pointer" pointer-events="visible"></circle></svg>
+
+<div>
+  <button type="button">Reset the ouput</button>
+  <pre id="output"></pre>
+</div>
+
+
+
+<script type="text/javascript">
+//select elments
+const circ = document.querySelector('circle');
+const output = document.getElementById('output');
+const btn = document.querySelector('button');
+
+
+// window.PointerEvent = help us to unify our way of handling all input events(in window.PointerEvent) in a hardware-agnostic way
+// typeof = help us determind the type (e.g - string, integer, number etc)
+const useEventType = (typeof window.PointerEvent === 'function') ? 'pointer' : 'mouse';
+const listeners = ['click','touchstart','touchend', 'touchmove',`${useEventType}enter`,`${useEventType}leave`, `${useEventType}move`];
+
+const pointerHandler = (event) => {
+  event.preventDefault();
+  // Creates a new Text node and store in evtype
+  const evtype = document.createTextNode(event.type + "\n");
+  //appendchild = adds a node to the end of the list of children of a specified parent node.
+  output.appendChild(evtype);
+}
+
+//  etype = read-only property returns a string containing the event's type
+listeners.map((etype) => {
+   circ.addEventListener(etype, pointerHandler);
+});
+
+btn.addEventListener('click', (event) => {
+  //Change the HTML(output) content
+  output.innerHTML = '';
+});
+
+
+</script>
+</body>
+</html>
