@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manipulating Pixels Using Canvas</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="script.js"></script>
+
+</head>
+<body>
+<!-- https://css-tricks.com/manipulating-pixels-using-canvas/ -->
+
+
+<div class="container">
+  <div class="column">
+    <img id="SourceImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Brill_windmill_April_2017.jpg/317px-Brill_windmill_April_2017.jpg" crossorigin="Anonymous">
+  </div>
+  <div class="column">
+    <div class="canvas">
+      <canvas id="Canvas"></canvas>
+    </div>
+  </div>
+</div>
+
+<button id="PaintButton">Paint</button>
+<br>
+
+<label for="BrightnessSlider">Brightness (<span id="BrightnessValue">0</span>)</label>
+<br>
+<input id="BrightnessSlider" type="range" value="0" min="-100" max="100">
+<br>
+<label for="ContrastSlider">Contrast (<span id="ContrastValue">0</span>)</label>
+<br>
+<input type="range" id="ContrastSlider" value="0" min="-100" max="100">
+    
+
+</body>
+</html>
