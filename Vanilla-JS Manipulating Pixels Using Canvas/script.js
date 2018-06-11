@@ -1,3 +1,4 @@
+//create variables
 var brightnessSlider;
 var contrastSlider;
 var brightnessValue;
@@ -8,8 +9,10 @@ var canvas;
 var context;
 var painted;
 
+
 function init() {
 
+  //select and store elements
   brightnessSlider = document.getElementById('BrightnessSlider');
   brightnessValue = document.getElementById('BrightnessValue');
   contrastSlider = document.getElementById('ContrastSlider');
@@ -38,18 +41,23 @@ function init() {
   brightnessSlider.addEventListener('change', function (event) {
     var imageData;
     
+    //set brightness value to slider value
     brightnessValue.innerText = event.currentTarget.value;
     
     if (!painted) return;
     
+    // provides different ways to draw an image onto the canvas.
     redrawImage();
 
+    //// Get the canvas image data
     imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     applyBrightness(
       imageData.data,
+      //convert value into slider integar value
       parseInt(brightnessSlider.value, 10)
     );
     
+      // Update the canvas with the new data
     context.putImageData(imageData, 0, 0);
   });
   
@@ -75,6 +83,7 @@ function init() {
 }
 
 function drawImage(image) {
+  //Keeping the image variable accessible to other functions will be helpful as you can use that image instead to redraw the canvas with the original image
   context.drawImage(image, 0, 0);
 }
 
@@ -95,6 +104,12 @@ function onPaint(event) {
   context.putImageData(imageData, 0, 0);
 }
 
+// Adjusting the brightness of an image can be done using the next formula: 
+// newValue = currentValue + 255 * (brightness / 100).
+
+// brightness must be between -100 and 100
+// currentValue is the current light value of either Red, Green or Blue.
+// newValue is the result of the current color light plus brightness
 function applyBrightness(data, brightness) {
   for (var i = 0; i < data.length; i+= 4) {
     data[i] += 255 * (brightness / 100);
@@ -103,6 +118,8 @@ function applyBrightness(data, brightness) {
   }
 }
 
+
+//make sure the value stays between 0 - 255
 function truncateColor(value) {
   if (value < 0) {
     value = 0;
