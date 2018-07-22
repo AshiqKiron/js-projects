@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React - Template</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script type="text/babel">
+
+       //create comment component
+       var Comment = React.createClass({
+       //set initial state
+       getInitialState: function() {
+       //set editing to false
+           return {editing:false}
+       },
+
+       //edit function
+       edit:function () {
+           //set editing to true
+          this.setState({editing:true});
+       },
+
+       //save function
+       save:function () {
+           //replace current value using ref from another component & assing a index number
+           this.props.updateCommentText(this.refs.newText.value, this.props.index);
+           //when saved hide editing capabilities by setting state to false
+           this.setState({editing:false});
+       },
+
+       //remove function
+       remove:function() {
+           console.log('remove comment');
+           //find the respective board and delete from index
+           this.props.deleteFromBoard(this.props.index);
+       },
+       
+       //Normal board render function
+       renderNormal: function() {
+            return (
+                // this.props.children displays each text in between comment element, example - <comment> text </comment> 
+                //add edit and remove function to buttons
+            <div className="commentContainer">
+                <div className="commentText">{this.props.children}</div>
+                <button onClick={this.edit} className="button-primary">Edit</button>
+                <button onClick={this.remove} className="button-danger">Remove</button>
+            </div>
+        );
+       },
+
+       // display textarea form when edit button clicked
+       renderForm: function() {
+            return(
+            // using ref to reference in other components' and functions
+            // this.props.children displays each text in between comment element, example - <comment> text </comment> 
+            // in this case showing default value - "Intro value"
+            //adding save function
+            <div className="commentContainer">
+                <textarea ref="newText" defaultValue={this.props.children}></textarea>
+                <button onClick={this.save} className="button-success">Save</button>
+            </div>
+        );
+       },
+
+        //if state is editing return renderForm or return renderNormal box
+       render: function() {
+       if(this.state.editing) {
+           return this.renderForm();
+       } else {
+           return this.renderNormal();
+       }
+    }
+   });
+
+   // Introduce Board compnent
+   var Board = React.createClass({
+
+       //set initial state of comments to null or zero
+       getInitialState: function () {
+           return{
+               comments: [
+                 
+               ]
+           }
+       },
+       
+       //New comments adding function with adding defaultvalue "text" 
+       add: function(text) {
+           //refer to old array
+           var arr = this.state.comments;
+           //push new text at the end of the array
+           arr.push(text);
+           //update comments array state by referring to arr
+           this.setState({comments:arr})
+       },
+       
+       //Comment remove function
+       removeComment: function(i) {
+           //prints out comments with index number in console
+           console.log('Removing Comment' + i);
+           //arr is a reference to this.state.comments and when you spliced it, this.state.comments only has 2 items in it too (as it's the same object). The reason it does not update the view is because you need to trigger it manually
+           var arr = this.state.comments;
+           arr.splice(i, 1);
+           this.setState({comments: arr})
+       },
+
+       updateComment: function(newText, i) {
+           console.log('update comment');
+           var arr = this.state.comments;
+           arr[i] = newText;
+           this.setState({comments: arr})
+       },
+       //Each comment function to iterate over all comments "text" will go thru each text inside comment element
+       //And assing counter 0,1,2 via i parameter
+       eachComment: function(text, i){
+                return (
+                //In React key={i} use to  identify each unique child
+                //For us to count using index={i}
+                //using made up functions with updateCommentText & deleteFromBoard to use update and remove function in this comment
+                <Comment key={i} index={i} updateCommentText={this.updateComment} deleteFromBoard={this.removeComment}>
+                    {text}
+                </Comment>
+                );
+        },
+       
+       //on button click add default text "Intro Text" using bind function
+       //iterate over each comments with ES6 map function
+       render: function () {
+           return (
+               <div>
+               <button onClick={this.add.bind(null, 'Intro Text')} className="button-info create">Add New</button>
+                <div className="board">
+                    {this.state.comments.map(this.eachComment)}
+                </div>
+               </div>
+            
+           );
+       }
+   });
+
+   //finally render Board component
+   ReactDOM.render(<Board />, document.getElementById('container'));
+
+    </script>
+
+</body>
+</html>
