@@ -1,0 +1,8 @@
+#card {
+  position: absolute;
+  width: 250px;
+  height: 50px;
+  background: grey;
+  border-radius: 6px;
+  cursor: move;
+}
