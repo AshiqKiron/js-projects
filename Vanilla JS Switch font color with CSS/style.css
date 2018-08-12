@@ -1,0 +1,101 @@
+/* The challenge: 
+1) Set text to either black or white depending on the element background lightness
+2) Set a border as a darker variation of the base color to improve button visibility, ONLY IF background lightness is higher than the border lightness threshold
+3) Automatically generate a secondary color
+*/
+
+:root {
+  /* theme color variables to use in HSL declarations */
+  --hue: 220;
+  --sat: 100;
+  --light: 50;
+  /*the threshold at which colors are considered "light". 
+Range: integers from 0 to 100,
+recommended 50 - 70 */
+  --threshold: 65;
+  /*the threshold at which a darker border will be applied.
+Range: integers from 0 to 100,
+recommended 80+ */
+  --border-threshold: 80;
+}
+
+.btn {
+/*auxiliary variable for hue manipulation*/
+  --h: var(--hue);
+
+  /*sets the background for the base class*/
+  background: hsl(var(--h), calc(var(--sat) * 1%), calc(var(--light) * 1%));
+  
+  /* 1) Any lightness value bellow the threshold will result in white, any above will result in black*/
+  --switch: calc((var(--light) - var(--threshold)) * -100%);
+  color: hsl(0, 0%, var(--switch));
+  
+/* 2) border as 30% darker only if brightness is above the border threshold */
+  --border-light: calc(var(--light) * 0.7%);
+  --border-alpha:calc((var(--light) - var(--border-threshold)) * 10);
+  
+  border:.2em solid hsla(var(--h), calc(var(--sat) * 1%), var(--border-light), var(--border-alpha));
+}
+
+.btn--secondary{
+  /* 3) sets the background color as a 60º rotated hue */
+  --h: calc(var(--hue) + 60);
+}
+
+/* just aesthetic styles*/
+
+body{
+  background: honeydew;
+  padding:1rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.sliders{
+  width: 100%;
+  display:flex;
+}
+
+.sliders input{
+  flex:1;
+}
+
+.buttons{
+  display:flex;
+}
+
+.btn{
+  padding: 1em; margin: 0.5em;
+  font-size: 1.5rem; 
+  border-radius: 0.2em;
+  box-sizing: border-box;
+  flex:1;
+}
+
+input[type=range]{
+  display:flex;
+  flex-direction:column;
+  color: black;
+  text-align:center;
+  margin: 10px;
+}
+
+input::before{
+  content: attr(id);
+  text-transform: capitalize;
+}
+
+input[id=hue]::after{
+  counter-reset: hue var(--hue);
+  content: counter(hue);
+}
+
+input[id=saturation]::after{
+  counter-reset: sat var(--sat);
+  content: counter(sat);
+}
+
+input[id=lightness]::after{
+  counter-reset: light var(--light);
+  content: counter(light);
+}
