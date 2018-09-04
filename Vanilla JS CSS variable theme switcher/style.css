@@ -1,0 +1,98 @@
+ 
+        :root {
+            --red-hue: 360;
+            --blue-hue: 240;
+            --green-hue: 120;
+  
+            --main-hue: var(--red-hue);
+          --theme-darkness: 1;
+  
+            --nav-bg-color: hsl(var(--main-hue), 50%, 50%);
+            --nav-text-color: hsl(var(--main-hue), 50%, 10%);
+            --container-bg-color: hsl(var(--main-hue), 50%, 95%);
+  
+            --content-text-color: hsl(var(--main-hue), 50%, 50%);
+            --title-color: hsl(--main-hue, 50%, 20%);
+            --footer-bg-color: hsl(var(--main-hue), 93%, 88%);
+  
+            --button-text-color: hsl(var(--main-hue), 50%, 20%);
+                      filter: brightness(var(--theme-darkness));
+        }
+  
+        :root[theme='dark'] {
+            --red-hue: 360;
+            --blue-hue: 240;
+            --green-hue: 120;
+  
+            --main-hue: var(--blue-hue);
+            --theme-darkness: 1;
+  
+            --nav-bg-color: hsl(var(--main-hue), 50%, 90%);
+            --nav-text-color: hsl(var(--main-hue), 50%, 10%);
+            --container-bg-color: hsl(var(--main-hue), 50%, 95%);
+  
+  
+            --content-text-color: hsl(var(--main-hue), 50%, 50%);
+            --title-color: hsl(--main-hue, 50%, 20%);
+            --footer-bg-color: hsl(var(--main-hue), 93%, 88%);
+  
+            --button-text-color: hsl(var(--main-hue), 50%, 20%);
+  
+            filter: invert(1) brightness(var(--theme-darkness));
+        }
+        div.container > div > label,input[type=range]{
+            display: block;
+        }
+         
+        * {
+            margin: 0;
+        }
+  
+        html {
+            height: 100%;
+        }
+  
+        body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont,
+            “Segoe UI”, “Roboto”, “Oxygen”, “Ubuntu”, “Cantarell”,
+            “Fira Sans”, “Droid Sans”, “Helvetica Neue”,
+            sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+  
+        nav {
+            background: var(--nav-bg-color);
+            padding: 1.3rem;
+            color: var(--nav-text-color)
+        }
+  
+        .container {
+            flex: 1;
+            background: var(--container-bg-color);
+            padding: 1rem;
+        }
+  
+        p.content {
+            padding: 0.7rem;
+            font-size: 0.7rem;
+            color: var(--content-text-color)
+        }
+  
+        .container h2.title {
+            padding: 1rem;
+            color: var(--title-color)
+        }
+  
+        footer {
+            background: var(--footer-bg-color);
+            padding: 1rem;
+        }
+  
+        input[type=button] {
+            color: var(--button-text-color);
+            padding: 0.3rem;
+            font-size: 1rem;
+        }
+    
