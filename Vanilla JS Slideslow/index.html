@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.css">
+  <title>JS Projects</title>
+</head>
+<body>
+
+    <img name="slide" width="400" height="200" />
+
+  <script>
+
+var i = 0; 			// Start Point
+var images = [];	// Images Array
+var time = 3000;	// Time Between Switch
+	 
+// Image List
+images[0] = "https://images.pexels.com/photos/1374586/pexels-photo-1374586.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260";
+images[1] = "https://images.pexels.com/photos/1374585/pexels-photo-1374585.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260";
+images[2] = "https://images.pexels.com/photos/1374554/pexels-photo-1374554.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260";
+images[3] = "https://images.pexels.com/photos/1374122/pexels-photo-1374122.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260";
+
+
+// Change Image
+function changeImg(){
+	document.slide.src = images[i];
+
+	// Check If Index Is Under Max
+	if(i < images.length - 1){
+	  // Add 1 to Index
+	  i++; 
+	} else { 
+		// Reset Back To O
+		i = 0;
+	}
+
+	// Run function every x seconds
+	setTimeout("changeImg()", time);
+}
+
+// Run function when page loads
+window.onload=changeImg;
+
+
+  </script>
+</body>
+</html>
