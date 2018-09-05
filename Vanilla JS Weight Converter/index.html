@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+  <title>JS Projects</title>
+</head>
+<body>
+
+	<style>
+	body{
+  margin-top:70px;
+  background:#333;
+  color:#fff;
+}
+	</style>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<h1 class="display-4 text-center mb-3">Weight Converter</h1>
+				<form>
+					<div class="form-group">
+						<input id="lbsInput" type="number" class="form-control form-control-lg" placeholder="Enter Pounds...">
+					</div>
+				</form>
+				<div id="output">
+					<div class="card card-primary mb-2">
+						<div class="card-block">
+							<h4>Grams:</h4>
+							<div id="gramsOutput"></div>
+						</div>
+					</div>
+	
+					<div class="card card-success mb-2">
+						<div class="card-block">
+							<h4>Kilograms:</h4>
+							<div id="kgOutput"></div>
+						</div>
+					</div>
+	
+					<div class="card card-danger mb-2">
+						<div class="card-block">
+							<h4>Ounces:</h4>
+							<div id="ozOutput"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	
+		let lbsValue = document.getElementById('lbsInput');
+
+		document.getElementById('output').style.visibility = 'hidden';
+
+		function mainFunc() {
+
+			document.getElementById('output').style.visibility = 'visible';
+
+			let gramsResult = lbsValue.value/0.0022046;
+			let gramsOutput = document.getElementById('gramsOutput');
+			gramsOutput.innerHTML = gramsResult;
+
+			let kgResult = lbsValue.value/ 2.2046;
+			let kgOutput = document.getElementById('kgOutput');
+			kgOutput.innerHTML = kgResult;
+
+			let ozResult = lbsValue.value*16;
+			let ozOutput = document.getElementById('ozOutput');
+			ozOutput.innerHTML = ozResult;
+			
+
+		}
+
+		lbsValue.addEventListener('input', mainFunc);
+	
+	</script>
+</body>
+</html>
