@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <style>
+    body {
+  margin: 20px;
+  padding: 0;
+  background: #333;
+}
+
+.container {
+  max-width: 760px;
+  margin: auto;
+  border: #fff solid 3px;
+  background: #fff;
+}
+
+.main-img img,
+.imgs img {
+  width: 100%;
+}
+
+.imgs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* Fade Out animation */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in 1 forwards;
+}
+
+.fade-out {
+  opacity: 1;
+  animation: fadeOut 0.5s ease-in 1 forwards;
+}
+
+  </style>
+  <title>Number Facts</title>
+
+  <!-- https://www.youtube.com/watch?v=afoxd5b0bJo -->
+</head>
+<div class="container">
+  <div class="main-img">
+    <img src="https://preview.ibb.co/gxVppG/img1.jpg" id="current">
+  </div>
+
+  <div class="imgs">
+    <img src="https://preview.ibb.co/gxVppG/img1.jpg">
+    <img src="https://preview.ibb.co/iZ3Lww/img2.jpg">
+    <img src="https://preview.ibb.co/iQsPOb/img3.jpg">
+    <img src="https://preview.ibb.co/gFFdib/img4.jpg">
+    <img src="https://preview.ibb.co/hS5ppG/img5.jpg">
+    <img src="https://preview.ibb.co/goKtGw/img6.jpg">
+    <img src="https://preview.ibb.co/bSWjOb/img7.jpg">
+    <img src="https://preview.ibb.co/i2o9pG/img8.jpg">
+  </div>
+</div>
+
+  <script>
+
+    const image = document.querySelectorAll('.imgs img');
+    let currentSelect = document.getElementById('current');
+    
+    
+
+    function mainFunc(e) {
+     
+      currentSelect.src = e.target.src;
+      
+      currentSelect.classList.add('fade-in');
+
+      setTimeout(() => { currentSelect.classList.remove('fade-in'); }, 500);
+
+      console.log(currentSelect.src);
+
+    }
+
+    image.forEach( imgs => imgs.addEventListener('click', mainFunc));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //   const current = document.querySelector("#current");
+  //   const imgs = document.querySelectorAll(".imgs img");
+  //   const opacity = 0.6;
+
+  // // Set first img opacity
+  // imgs[0].style.opacity = opacity;
+
+  //   imgs.forEach(img => img.addEventListener("click", imgClick));
+
+  //   function imgClick(e) {
+  //     // Reset the opacity
+  //     imgs.forEach(img => (img.style.opacity = 1));
+
+  //     // Change current image to src of clicked image
+  //     current.src = e.target.src;
+
+  //     // Add fade in class
+  //     current.classList.add("fade-in");
+
+  //     // Remove fade-in class after .5 seconds
+  //     setTimeout(() => current.classList.remove("fade-in"), 500);
+  //     // Change the opacity to opacity var
+  //     e.target.style.opacity = opacity;
+  //   }
+
+    
+  </script>
+</body>
+</html>
