@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS Projects</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  </head>
+  <style>
+
+     #chain, #battery, #hourglass{
+      font-size:50px;
+    }
+
+
+  </style>
+  <body>
+      <div id="chain" class="fa fa-bolt"></div>
+
+      <br><br>
+    
+      <div id="battery" class="fa fa-twitter"></div>
+    
+      <br><br>
+    
+      <div id="hourglass" class="fa fa-instagram"></div>
+    
+
+  </body>
+
+  <script>
+  
+    let ch = document.getElementById('chain');
+    let bat = document.getElementById('battery');
+    let hg = document.getElementById('hourglass');
+
+    function mainFunc() {
+      ch.className = 'fa fa-bolt';
+      setTimeout(() => ch.className = 'fa fa-facebook', 1000);
+    }
+
+    mainFunc();
+
+    setInterval(mainFunc, 2000);
+
+    
+
+    function mainFunc1() {
+      bat.className = 'fa fa-bolt';
+      setTimeout(() => bat.className = 'fa fa-twitter', 1000);
+    }
+
+    mainFunc1();
+
+    setInterval(mainFunc1, 2000);
+
+
+    function mainFunc2() {
+      hg.className = 'fa fa-bolt';
+      setTimeout(() => hg.className = 'fa fa-instagram', 1000);
+    }
+
+    mainFunc2();
+
+    setInterval(mainFunc2, 2000);
+
+  </script>
+</html>
