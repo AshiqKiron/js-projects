@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" rel="script/javascript">
+  
+  <style>
+
+    body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Custom page header */
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+  </style>
+  
+
+  <!-- https://www.youtube.com/watch?v=DIVfDZZeGxM -->
+</head>
+<body >
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+
+        </nav>
+        <h3 class="text-muted">Bookmarker</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h2>Bookmark Your Favorite Sites</h2>
+        <form id="myForm">
+          <div class="form-group">
+            <label>Site Name</label>
+            <input type="text" class="form-control" id="siteName" placeholder="Website Name">
+          </div>
+          <div class="form-group">
+            <label>Site URL</label>
+            <input type="text" class="form-control" id="siteUrl" placeholder="Website URL">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-12">
+          <div id="bookmarksResults"></div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2016 Bookmarker, Inc.</p>
+      </footer>
+
+    </div> <!-- /container -->
+</body>
+  <script>
+
+
+
+
+    // Listen for form submit
+    document.getElementById('myForm').addEventListener('submit', saveBookmark);
+
+    // Save Bookmark
+    function saveBookmark(e){
+      // Get form values
+      var siteName =document.getElementById('siteName').value;
+      var siteUrl =document.getElementById('siteUrl').value;
+
+      if(!validateForm(siteName, siteUrl)){
+        return false;
+      }
+
+      var bookmark = {
+        name: siteName,
+        url: siteUrl
+      }
+
+      /*
+        // Local Storage Test
+        localStorage.setItem('test', 'Hello World');
+        console.log(localStorage.getItem('test'));
+        localStorage.removeItem('test');
+        console.log(localStorage.getItem('test'));
+      */
+
+      // Test if bookmarks is null
+      if(localStorage.getItem('bookmarks') === null){
+        // Init array
+        var bookmarks = [];
+        // Add to array
+        bookmarks.push(bookmark);
+        // Set to localStorage
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      } else {
+        // Get bookmarks from localStorage
+        var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+        // Add bookmark to array
+        bookmarks.push(bookmark);
+        // Re-set back to localStorage
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      }
+
+      // Clear form
+      document.getElementById('myForm').reset();
+
+      // Re-fetch bookmarks
+      fetchBookmarks();
+
+      // Prevent form from submitting
+      e.preventDefault();
+    }
+
+    // Delete bookmark
+    function deleteBookmark(url){
+      // Get bookmarks from localStorage
+      var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+      // Loop through the bookmarks
+      //if current url matches with working url delete it
+      for(var i =0;i < bookmarks.length;i++){
+        if(bookmarks[i].url == url){
+          // Remove from array
+          bookmarks.splice(i, 1);
+        }
+      }
+      // Re-set back to localStorage
+      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+
+      // Re-fetch bookmarks
+      fetchBookmarks();
+    }
+
+    // Fetch bookmarks
+    function fetchBookmarks(){
+      // Get bookmarks from localStorage
+      var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+      // Get output id
+      var bookmarksResults = document.getElementById('bookmarksResults');
+
+      // Build output
+      bookmarksResults.innerHTML = '';
+      for(var i = 0; i < bookmarks.length; i++){
+        var name = bookmarks[i].name;
+        var url = bookmarks[i].url;
+
+        bookmarksResults.innerHTML +=       
+                                      '<div class="well">'+
+                                      '<h3>'+name+
+                                      ' <a class="btn btn-default" target="_blank" href="'+addhttp(url)+'">Visit</a> ' +
+                                      ' <a onclick="deleteBookmark(\''+url+'\')" class="btn btn-danger" href="#">Delete</a> ' +
+                                      '</h3>'+
+                                      '</div>';
+      }
+    }
+
+    // Validate Form
+    function validateForm(siteName, siteUrl){
+      if(!siteName || !siteUrl){
+        alert('Please fill in the form');
+        return false;
+      }
+
+      var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      var regex = new RegExp(expression);
+
+      if(!siteUrl.match(regex)){
+        alert('Please use a valid URL');
+        return false;
+      }
+
+      return true;
+    }
+
+    function addhttp(url) {
+      if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+          url = "http://" + url;
+      }
+      return url;
+    }
+
+  </script>
+</body>
+</html>
